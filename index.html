@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vera Mustello — Storefront</title>
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans">
+
+  <header class="bg-white shadow-sm border-b border-slate-200 sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 py-4 flex flex-col sm:flex-row justify-between items-center gap-4">
+      <h1 class="text-2xl font-bold tracking-tight text-emerald-600">Vera Mustello</h1>
+      <input type="text" id="search" placeholder="Search live products..." class="w-full sm:w-80 px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-slate-50">
+    </div>
+  </header>
+
+  <main class="max-w-7xl mx-auto px-4 py-8">
+    <div class="mb-6">
+      <h2 class="text-lg font-semibold text-slate-700">Product Showcase</h2>
+      <p class="text-sm text-slate-500">Live dynamic retail syncing channel</p>
+    </div>
+
+    <div id="grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+      <div class="col-span-full text-center py-12 text-slate-400 animate-pulse">Loading dataset arrays...</div>
+    </div>
+
+    <div class="mt-12 text-center border-t border-slate-200 pt-10">
+      <a href="https://shopneolife.com/mustaphabello1" target="_blank" class="inline-flex items-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-base py-3.5 px-8 rounded-xl transition-all duration-200 shadow-sm hover:shadow-md transform hover:-translate-y-0.5">
+        See More Products
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5l6 6m0 0l-6 6m6-6H3" />
+        </svg>
+      </a>
+      <p class="text-sm text-slate-500 mt-3">Explore our complete extended wellness collection directly on our official NeoLife portal.</p>
+    </div>
+  </main>
+
+  <script>
+    let allProducts = [];
+    const grid = document.getElementById('grid');
+    const search = document.getElementById('search');
+
+    async function loadProducts() {
+      try {
+        const res = await fetch('products.json');
+        allProducts = await res.json();
+        render(allProducts);
+      } catch (err) {
+        grid.innerHTML = '<div class="col-span-full text-center py-12 text-red-500">Error reading product streaming database.</div>';
+      }
+    }
+
+    function render(list) {
+      if(list.length === 0) {
+        grid.innerHTML = '<div class="col-span-full text-center py-12 text-slate-400">No matching retail items.</div>';
+        return;
+      }
+      grid.innerHTML = list.map(p => `
+        <div class="bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm flex flex-col justify-between hover:shadow-md transition-all group">
+          
+          <div class="relative bg-white aspect-square w-full overflow-hidden flex items-center justify-center border-b border-slate-100">
+            <img src="${p.image_url}" alt="${p.name}" class="object-contain w-full h-full p-4 group-hover:scale-105 transition-transform duration-300">
+            <span class="absolute top-3 left-3 text-[10px] font-mono bg-slate-100/90 backdrop-blur-xs text-slate-600 px-2 py-0.5 rounded">${p.id}</span>
+          </div>
+
+          <div class="p-5 flex-1 flex flex-col justify-between">
+            <div>
+              <h3 class="font-medium text-slate-900 leading-snug line-clamp-2 min-h-[44px]">${p.name}</h3>
+              <div class="mt-2 flex items-center justify-between">
+                <span class="text-lg font-bold text-slate-900">${p.retail_price}</span>
+                <span class="text-[11px] bg-emerald-50 text-emerald-700 px-2 py-0.5 rounded-full font-medium">Active Stock</span>
+              </div>
+            </div>
+
+            <div class="mt-5">
+              <a href="${p.redirect_url}" target="_blank" class="block w-full text-center bg-emerald-600 hover:bg-emerald-700 text-white font-medium text-sm py-2.5 px-4 rounded-lg transition-colors shadow-xs">
+                Add to Cart
+              </a>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    search.addEventListener('input', (e) => {
+      const query = e.target.value.toLowerCase();
+      render(allProducts.filter(p => p.name.toLowerCase().includes(query)));
+    });
+
+    loadProducts();
+  </script>
+</body>
+</html>

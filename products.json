@@ -1,0 +1,66 @@
+[
+  {
+    "id": "sku-2722",
+    "name": "Chelated Cal-Mag with 500 IU Vitamin D3 - 90 Tablets",
+    "retail_price": "₦24,750.00",
+    "image_url": "https://s3-us-west-1.amazonaws.com/static.neolife.com/market/ng/sku/2722/landingpage_l.jpg",
+    "redirect_url": "https://shopneolife.com/mustaphabello1/shop/product/chelated-cal-mag-with-500-iu-vitamin-d3-90-tablets",
+    "in_stock": true
+  },
+  {
+    "id": "sku-2565",
+    "name": "Carotenoid Complex - 90 Capsules",
+    "retail_price": "₦80,280.00",
+    "image_url": "https://s3-us-west-1.amazonaws.com/static.neolife.com/market/ng/sku/2565/landingpage_l.jpg",
+    "redirect_url": "https://shopneolife.com/mustaphabello1/shop/product/carotenoid-complex-90-capsules",
+    "in_stock": true
+  },
+  {
+    "id": "sku-2782",
+    "name": "Aloe Vera Plus",
+    "retail_price": "₦22,750.00",
+    "image_url": "https://s3-us-west-1.amazonaws.com/static.neolife.com/market/ng/sku/2782/landingpage_l.jpg",
+    "redirect_url": "https://shopneolife.com/mustaphabello1/shop/product/aloe-vera-plus-1-litre",
+    "in_stock": true
+  },
+  {
+    "id": "sku-2512",
+    "name": "Chewable All-C - 90 Tablets",
+    "retail_price": "₦35,050.00",
+    "image_url": "https://s3-us-west-1.amazonaws.com/static.neolife.com/market/ng/sku/2512/landingpage_l.jpg",
+    "redirect_url": "https://shopneolife.com/mustaphabello1/shop/product/chewable-all-c-90-tablets",
+    "in_stock": true
+  },
+  {
+    "id": "sku-2513",
+    "name": "CoQ10 - 60 Capsules",
+    "retail_price": "₦64,250.00",
+    "image_url": "https://s3-us-west-1.amazonaws.com/static.neolife.com/market/ng/sku/2513/landingpage_l.jpg",
+    "redirect_url": "https://shopneolife.com/mustaphabello1/shop/product/coq10-60-capsules",
+    "in_stock": true
+  },
+  {
+    "id": "sku-2896",
+    "name": "Feminine Herbal Complex - 60 Tablets",
+    "retail_price": "₦56,240.00",
+    "image_url": "https://s3-us-west-1.amazonaws.com/static.neolife.com/market/ng/sku/2896/landingpage_l.jpg",
+    "redirect_url": "https://shopneolife.com/mustaphabello1/shop/product/feminine-herbal-complex-60-tablets",
+    "in_stock": true
+  },
+  {
+    "id": "sku-2789",
+    "name": "Fibre Tablets - 120 Tablets",
+    "retail_price": "₦30,910.00",
+    "image_url": "https://s3-us-west-1.amazonaws.com/static.neolife.com/market/ng/sku/2789/landingpage_l.jpg",
+    "redirect_url": "https://shopneolife.com/mustaphabello1/shop/product/fibre-tablets-120-tablets",
+    "in_stock": true
+  },
+  {
+    "id": "sku-2790",
+    "name": "Flavonoid Complex - 60 Tablets",
+    "retail_price": "₦40,350.00",
+    "image_url": "https://s3-us-west-1.amazonaws.com/static.neolife.com/market/ng/sku/2790/landingpage_l.jpg",
+    "redirect_url": "https://shopneolife.com/mustaphabello1/shop/product/flavonoid-complex-60-tablets",
+    "in_stock": true
+  }
+]
