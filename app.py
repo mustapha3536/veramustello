@@ -4,14 +4,13 @@ import requests
 
 app = Flask(__name__)
 
-# Core Environment Variables safely mapped on Render
+# Environment variables securely mapped from Render
 OPENROUTER_API_KEY = os.getenv("OPENROUTER_API_KEY")
 TELEGRAM_BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
 STOREFRONT_URL = "https://mustapha3536.github.io/veramustello/"
 
 @app.route('/')
 def dashboard():
-    # A sleek, interactive dark-mode dashboard for your marketing metrics
     return f'''
     <!DOCTYPE html>
     <html lang="en">
@@ -58,21 +57,52 @@ def telegram_webhook():
         chat_id = update["message"]["chat"]["id"]
         user_text = update["message"]["text"]
         
-        # 1. Forward conversational traffic straight to your OpenRouter API Key
         openrouter_url = "https://openrouter.ai/api/v1/chat/completions"
         headers = {
             "Authorization": f"Bearer {OPENROUTER_API_KEY}",
             "Content-Type": "application/json"
         }
         
-        # We instruct the AI to know everything about your products using your live setup text
+        # Exact product catalog injected directly into memory to prevent hallucinations
+        system_content = (
+            "You are the professional, highly persuasive senior marketing executive for Vera Mustello wellness brand. "
+            f"Your objective is to answer product questions accurately, state real prices in Nigerian Naira (₦), "
+            f"and professionally drive users to click our catalog link to order: {STOREFRONT_URL}\n\n"
+            "CRITICAL RULES:\n"
+            "- ALWAYS quote prices in Nigerian Naira (₦). Never mention US Dollars ($) or invent arbitrary bundle discounts.\n"
+            "- Only use the exact naming conventions and sizes listed below.\n\n"
+            "OFFICIAL REAL-TIME PRICE CATALOG:\n"
+            "1. Chelated Cal-Mag with 500 IU Vitamin D3 - 90 Tablets\n"
+            "   - Price: ₦24,750.00\n"
+            "   - Benefits: Highly bioavailable calcium and magnesium to boost bone strength, nerve function, and deep muscle relaxation.\n"
+            "2. Carotenoid Complex - 90 Capsules\n"
+            "   - Price: ₦80,280.00\n"
+            "   - Benefits: Elite whole-food antioxidant shield proven to augment immune capacity by 37% in just 20 days.\n"
+            "3. Aloe Vera Plus\n"
+            "   - Price: ₦22,750.00\n"
+            "   - Benefits: Refreshing herbal blend designed to calm the digestive tract and assist with sustained energy layout.\n"
+            "4. Chewable All-C - 90 Tablets\n"
+            "   - Price: ₦35,050.00\n"
+            "   - Benefits: Delicious daily dose of premium vitamin C to support skin cells and robust body defenses.\n"
+            "5. CoQ10 - 60 Capsules\n"
+            "   - Price: ₦64,250.00\n"
+            "   - Benefits: Delivers targeted energy infrastructure straight to your heart cells for optimal natural stamina.\n"
+            "6. Feminine Herbal Complex - 60 Tablets\n"
+            "   - Price: ₦56,240.00\n"
+            "   - Benefits: Proprietary blend of distinct botanicals calibrated for modern women's balance and health wellness.\n"
+            "7. Fibre Tablets - 120 Tablets\n"
+            "   - Price: ₦30,910.00\n"
+            "   - Benefits: Sourced from broad natural plants to aid fast digestive transit and internal body cleansing.\n"
+            "8. Flavonoid Complex - 60 Tablets\n"
+            "   - Price: ₦40,350.00\n"
+            "   - Benefits: Water-soluble cellular protection to shield vascular pathways and improve system protection.\n\n"
+            f"Conclude responses by cleanly offering to help them complete their selection via our checkout layout: {STOREFRONT_URL}"
+        )
+        
         payload = {
             "model": "meta-llama/llama-3-70b-instruct",
             "messages": [
-                {
-                    "role": "system", 
-                    "content": f"You are the senior marketing executive for Vera Mustello wellness brand. Your goal is to explain products (Tre-en-en, Cal-Mag, Carotenoid Complex) and cleanly send users to purchase on your catalog link: {STOREFRONT_URL}. Be helpful, polite, and persuasive."
-                },
+                {"role": "system", "content": system_content},
                 {"role": "user", "content": user_text}
             ]
         }
@@ -81,10 +111,8 @@ def telegram_webhook():
             ai_response = requests.post(openrouter_url, json=payload, headers=headers, timeout=10).json()
             reply_text = ai_response['choices'][0]['message']['content']
         except Exception:
-            # Safe fall-back message if OpenRouter runs out of credits or drops mid-transit
             reply_text = f"Hello! Welcome to Vera Mustello. Our automated catalog system is running a quick refresh. You can browse all live wellness products right here: {STOREFRONT_URL}"
 
-        # 2. Transmit the response message straight back to the user on Telegram
         telegram_url = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendMessage"
         requests.post(telegram_url, json={"chat_id": chat_id, "text": reply_text}, timeout=10)
 
